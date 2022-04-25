@@ -60,6 +60,7 @@ int right
     return j;
 }
 
+
 /***********************************
 クイックソートを行う
 ***********************************/
@@ -78,6 +79,55 @@ int right
         q_sort(array, left, pivot - 1);
         q_sort(array, pivot + 1, right);
     }
+
+    return 0;
+}
+
+/***********************************
+ クイックソートを行う
+***********************************/
+int
+quick_sort(
+int *array,
+int left,
+int right
+)
+{
+    int right_index, left_index, pivot;
+
+    if ( left >= right )
+    {
+        return -1;
+    }
+
+    left_index = left;
+    right_index = right;
+    pivot = left;
+
+    for ( ; left_index < right_index ; )
+    {
+        for ( ; array[left_index] < array[pivot] ; )
+        {
+            left_index++;
+        }
+
+        right_index--;
+        
+        for ( ; array[right_index] > array[pivot] ; )
+        {
+            right_index--;
+        }
+
+        if ( left_index < right_index )
+        {
+            swap(&array[right_index], &array[left_index]);
+        }
+    }
+
+    swap(&array[pivot], &array[right_index]);
+
+    quick_sort(array, left, right_index - 1);
+    quick_sort(array, right_index + 1, right);
 
     return 0;
 }
@@ -102,7 +152,7 @@ main()
     int length = sizeof(array) / sizeof(int);
 
     printf("Length: %d\n", length);
-    q_sort(array, 0, length);
+    quick_sort(array, 0, length);
 
     int i ;
     
