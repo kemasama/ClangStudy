@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int
 swap(
@@ -69,6 +70,7 @@ int right   // 右端（※配列の要素数ではない）
 int
 main()
 {
+    /*
     int array[] = {
         10, 20, 30, 50,
         50, 10, 45, 65,
@@ -79,6 +81,42 @@ main()
         75, 15, 161, 165,
         166, 167, 87, 86
     };
+    */
+
+    char dataFile[] = "data.txt";
+    FILE *fp = fopen(dataFile, "r");
+
+    if ( fp == NULL ) {
+        printf("file can not open.\n");
+        return -1;
+    }
+
+    fseek(fp, 0, SEEK_SET);
+    int line_count = 0;
+    int c;
+    while ( (c = fgetc(fp)) != EOF )
+    {
+        if ( c == '\n')
+        {
+            line_count++;
+        }
+    }
+
+    int array[line_count];
+
+    fseek(fp, 0, SEEK_SET);
+
+    int read_line_size = 512;
+    char read_line[read_line_size];
+    int j;
+
+    for ( j = 0 ; j < line_count ; j++ )
+    {
+        fgets(read_line, read_line_size, fp);
+        array[j] = atoi(read_line);
+    }
+
+    fclose(fp);
 
     int length = sizeof(array) / sizeof(int);
 
