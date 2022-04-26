@@ -70,21 +70,16 @@ int right   // 右端（※配列の要素数ではない）
 int
 main()
 {
-    /*
-    int array[] = {
-        10, 20, 30, 50,
-        50, 10, 45, 65,
-        76, 54, 56, 15,
-        34, 31, 14, 17,
-        14, 15, 11, 16,
-        90, 19, 98, 76,
-        75, 15, 161, 165,
-        166, 167, 87, 86
-    };
-    */
+    int i;
+    int j;
+    int c;
+    int length = 0;
+    int read_line_size = 512;
+    char read_line[read_line_size];
+    FILE *fp;
 
     char dataFile[] = "data.txt";
-    FILE *fp = fopen(dataFile, "r");
+    fp = fopen(dataFile, "r");
 
     if ( fp == NULL ) {
         printf("file can not open.\n");
@@ -92,25 +87,19 @@ main()
     }
 
     fseek(fp, 0, SEEK_SET);
-    int line_count = 0;
-    int c;
     while ( (c = fgetc(fp)) != EOF )
     {
         if ( c == '\n')
         {
-            line_count++;
+            length++;
         }
     }
 
-    int array[line_count];
+    int array[length];
 
     fseek(fp, 0, SEEK_SET);
 
-    int read_line_size = 512;
-    char read_line[read_line_size];
-    int j;
-
-    for ( j = 0 ; j < line_count ; j++ )
+    for ( j = 0 ; j < length ; j++ )
     {
         fgets(read_line, read_line_size, fp);
         array[j] = atoi(read_line);
@@ -118,12 +107,8 @@ main()
 
     fclose(fp);
 
-    int length = sizeof(array) / sizeof(int);
-
     printf("Length: %d\n", length);
     quick_sort(array, 0, length - 1);
-
-    int i ;
     
     for ( i = 0 ; i < length ; i++ )
     {
