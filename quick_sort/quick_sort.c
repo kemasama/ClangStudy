@@ -51,9 +51,13 @@ int right   // 右端（※配列の要素数ではない）
             larger_index--;
         }
 
-        if ( array[smaller_index] > array[larger_index] ) {
-            swap(&array[smaller_index], &array[larger_index]);
-        } else if ( array[smaller_index] == array[larger_index] ) {
+        if ( array[smaller_index] < array[larger_index] ) {
+            break;
+        }
+
+        swap(&array[smaller_index], &array[larger_index]);
+
+        if ( array[smaller_index] == array[larger_index] ) {
             smaller_index++;
         }
     }
